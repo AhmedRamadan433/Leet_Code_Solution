@@ -1,24 +1,19 @@
 class Solution {
 public:
     bool reorderedPowerOf2(int n) {
-        if (n == 1)
-            return 1;
-        vector<int> arr;
+        string ans = frequncy(n);
+        for (int i = 0; i < 31; i++) {
+            if (frequncy(1 << i) == ans)
+                return 1;
+        }
+        return 0;
+    }
+    string frequncy(int n) {
+        string s(10, '0');
         while (n) {
-            arr.push_back(n % 10);
+            s[n % 10]++;
             n /= 10;
         }
-        sort(arr.begin(), arr.end());
-        do {
-            long ans = 0, cnt = 1;
-            for (int x : arr)
-                ans += x * cnt, cnt *= 10;
-            bool c = (ans) & (ans - 1);
-            cout<<ans<<endl;
-            if (c == 0 && int(log10(ans)) + 1 == arr.size())
-                return 1;
-        } while (next_permutation(arr.begin(), arr.end()));
-
-        return 0;
+        return s;
     }
 };
